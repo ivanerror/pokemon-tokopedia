@@ -19,6 +19,7 @@ const PokemonDetailFunc = () => {
           title: "Name your pokemon!",
           input: "text",
           confirmButtonText: "Submit",
+          confirmButtonColor: Color.red,
           preConfirm: (nickname) => {
             const nickNameList = pokedex.map((pokemon) => pokemon.nickname);
 
