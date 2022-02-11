@@ -2,13 +2,15 @@ import React from "react";
 import { useQuery } from "@apollo/client";
 import { Waypoint } from "react-waypoint";
 
-import { GET_POKEMON_LIST } from "../graphql/Pokemon";
-import { PokemonContainer } from "../Component/styles";
-import PokedexHeader from "../Component/PokemonHeader";
+import { GET_POKEMON_LIST } from "../../graphql/Pokemon";
+import { PokemonContainer } from "../../Component/styles";
+import PokedexHeader from "../../Component/PokemonHeader";
 
-import PokemonList from "../Component/PokemonList";
+import PokemonList from "../../Component/PokemonList";
 
-import { usePokedex } from "../Context/PokedexProvider";
+import { usePokedex } from "../../Context/PokedexProvider";
+
+import fetchMoreConf from "./fetchMoreConf";
 
 const PokemonListPage = () => {
   const pokedex = usePokedex();
@@ -21,28 +23,6 @@ const PokemonListPage = () => {
   const { pokemons } = data;
   const { results, nextOffset, count } = pokemons;
 
-  const handleFetchMore = () =>
-    fetchMore({
-      variables: { limit: 18, offset: nextOffset },
-      updateQuery: (pv, { fetchMoreResult }) => {
-        if (!fetchMoreResult) {
-          return pv;
-        }
-
-        const resValue = {
-          pokemons: {
-            ...fetchMoreResult.pokemons,
-            results: [
-              ...pv.pokemons.results,
-              ...fetchMoreResult.pokemons.results,
-            ],
-          },
-        };
-
-        return resValue;
-      },
-    });
-
   return (
     <>
       <PokedexHeader title="Pokemon List" total={pokedex.length} />
@@ -50,7 +30,9 @@ const PokemonListPage = () => {
         {results.map((pokemon, index) => (
           <div>
             {index === results.length - 6 && results.length < count && (
-              <Waypoint onEnter={handleFetchMore} />
+              <Waypoint
+                onEnter={() => fetchMore(fetchMoreConf(20, nextOffset))}
+              />
             )}
             <PokemonList
               pokemon={pokemon}

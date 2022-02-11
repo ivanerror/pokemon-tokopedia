@@ -1,47 +1,35 @@
-import React, { useState, useEffect } from "react";
-import {
-  CheckBoxInput,
-  Color,
-  List,
-  ListItem,
-  PokedexContainer,
-  PokedexWrapper,
-  PokemonGroup,
-  ReleaseButton,
-} from "../Component/styles";
-import PokedexHeader from "../Component/PokemonHeader";
-import { Link } from "react-router-dom";
-import ReleaseBar from "../Component/ReleaseBar";
+import { useState, useEffect } from "react";
+import { Color } from "../../Component/styles";
 import Swal from "sweetalert2";
-import { usePokedex, usePokedexUpdate } from "../Context/PokedexProvider";
+import { usePokedex, usePokedexUpdate } from "../../Context/PokedexProvider";
 
-const groupMyPokemonByName = (pokedex) => {
-  const group_to_values = pokedex.reduce(function (obj, item) {
-    obj[item.name] = {
-      image: item.image,
-      nickname: obj[item.name] ? obj[item.name].nickname : [],
-    };
-    obj[item.name].nickname = [...obj[item.name].nickname, item.nickname];
-    return obj;
-  }, {});
-
-  const groups = Object.keys(group_to_values).map(function (key) {
-    return {
-      name: key,
-      nickname: group_to_values[key].nickname,
-      image: group_to_values[key].image,
-    };
-  });
-
-  return groups;
-};
-
-const MyPokemon = () => {
-  const pokedex = usePokedex();
-  const setPokedex = usePokedexUpdate();
+const MyPokemonFunc = () => {
   const [checked, setChecked] = useState(false);
   const [selectedPokemon, setSelectedPokemon] = useState([]);
   const [selectedPokemonGroup, setSelectedPokemonGroup] = useState([]);
+  const pokedex = usePokedex();
+  const setPokedex = usePokedexUpdate();
+
+  const groupMyPokemonByName = (pokedex) => {
+    const group_to_values = pokedex.reduce(function (obj, item) {
+      obj[item.name] = {
+        image: item.image,
+        nickname: obj[item.name] ? obj[item.name].nickname : [],
+      };
+      obj[item.name].nickname = [...obj[item.name].nickname, item.nickname];
+      return obj;
+    }, {});
+
+    const groups = Object.keys(group_to_values).map(function (key) {
+      return {
+        name: key,
+        nickname: group_to_values[key].nickname,
+        image: group_to_values[key].image,
+      };
+    });
+
+    return groups;
+  };
 
   const groupedPokedex = groupMyPokemonByName(pokedex);
 
@@ -67,7 +55,7 @@ const MyPokemon = () => {
     }
 
     setSelectedPokemonGroup(handlePokemonGroup);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedPokemon, pokedex]);
 
   const handleReleaseButton = () => {
@@ -140,61 +128,17 @@ const MyPokemon = () => {
     setChecked(!checked);
   };
 
-  return (
-    <>
-      <PokedexHeader title="My Pokemon" total={pokedex.length} />
-      <PokedexContainer>
-        {groupedPokedex.map((pokemon) => {
-          return (
-            <PokedexWrapper>
-              <CheckBoxInput
-                value={pokemon.name}
-                checked={selectedPokemonGroup.includes(pokemon.name)}
-                onChange={() => handleSelectPokemonGroup(pokemon)}
-                label={pokemon.name}
-                name={`pokeGroup`}
-              />
-
-              <PokemonGroup>
-                <Link to={`/pokemon/${pokemon.name}`}>
-                  <img src={pokemon.image} alt="" />
-                </Link>
-                <List>
-                  {pokemon.nickname.map((nickname) => {
-                    return (
-                      <ListItem>
-                        <CheckBoxInput
-                          value={nickname}
-                          checked={selectedPokemon.includes(nickname)}
-                          onChange={(value) =>
-                            handleSelectPokemon(value, nickname)
-                          }
-                          label={nickname}
-                          name={pokemon.name}
-                        />
-
-                        <ReleaseButton
-                          onClick={() => handleReleasePokemon(nickname)}
-                        >
-                          <img src="/assets/cancel.png" alt="" />
-                        </ReleaseButton>
-                      </ListItem>
-                    );
-                  })}
-                </List>
-              </PokemonGroup>
-            </PokedexWrapper>
-          );
-        })}
-      </PokedexContainer>
-
-      <ReleaseBar
-        selectAll={() => handleSelectAll()}
-        checked={checked}
-        onClick={handleReleaseButton}
-      />
-    </>
-  );
+  return {
+    handleReleasePokemon,
+    handleSelectPokemon,
+    handleSelectPokemonGroup,
+    handleSelectAll,
+    handleReleaseButton,
+    groupedPokedex,
+    selectedPokemon,
+    selectedPokemonGroup,
+    checked,
+  };
 };
 
-export default MyPokemon;
+export default MyPokemonFunc;
