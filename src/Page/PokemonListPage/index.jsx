@@ -29,7 +29,7 @@ const PokemonListPage = () => {
       <PokemonContainer>
         {results.map((pokemon, index) => (
           <div>
-            {index === results.length - 6 && results.length < count && (
+            {index === results.length - 8 && results.length < count && (
               <Waypoint
                 onEnter={() => fetchMore(fetchMoreConf(20, nextOffset))}
               />
