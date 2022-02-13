@@ -264,9 +264,13 @@ export const StyledLink = styled(Link)`
 
 export const PokemonContainer = styled.div`
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: auto;
   grid-gap: 0.5rem;
   margin: 0 0.5rem;
+
+  @media (min-width: 350px) {
+    grid-template-columns: auto auto;
+  }
 
   @media (min-width: 768px) {
     grid-template-columns: auto auto auto;

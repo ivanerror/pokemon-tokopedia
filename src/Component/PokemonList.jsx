@@ -31,6 +31,7 @@ const PokeName = styled.div`
   line-height: 1.5rem;
   text-align: center;
   text-transform: Capitalize;
+  text-overflow: ellipsis;
 `;
 
 const PokeOwned = styled.div`

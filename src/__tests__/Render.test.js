@@ -1,11 +1,8 @@
 import { render, screen } from "@testing-library/react";
-import { UserEvent } from "@testing-library/user-event";
 import AppWrapper from "../AppWrapper";
 import PokemonList from "../Component/PokemonList";
 import PokemonDetailPage from "../Page/PokemonDetailPage";
-import PokemonListPage from "../Page/PokemonListPage";
 import MyPokemonPage from "../Page/MyPokemonPage";
-import { PokedexProvider } from "../Context/PokedexProvider";
 
 test("Render pokemon card Correctly", () => {
   const pokemon = {
