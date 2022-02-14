@@ -1,5 +1,3 @@
-# Getting Started with Create React App
-
 ## Running the React App
 
 - On Project Directory - input "npm install" on the terminal
