@@ -1,5 +1,5 @@
 import React from "react";
-import { NavigationBar, NavbarLogo, NavbarMenu } from "./styles";
+import { NavigationBar, NavbarLogo, NavbarMenu, StyledLink } from "./styles";
 import { Link, useLocation } from "react-router-dom";
 
 const TopBar = () => {
@@ -11,14 +11,14 @@ const TopBar = () => {
       <NavbarLogo src="/assets/pokemon-logo.png" />
 
       {path !== "/" && (
-        <Link to="/">
+        <StyledLink as={Link} to="/" data-testid="pokemon-list">
           <NavbarMenu src="/assets/pikachu.png" />
-        </Link>
+        </StyledLink>
       )}
       {path !== "/my-pokemon" && (
-        <Link to="/my-pokemon">
+        <StyledLink as={Link} to="/my-pokemon" data-testid="pokedex">
           <NavbarMenu src="/assets/pokeball.png" />
-        </Link>
+        </StyledLink>
       )}
     </NavigationBar>
   );

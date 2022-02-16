@@ -2,6 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import { Color } from "../Component/styles";
 import { StyledLink } from "../Component/styles";
+import { Link } from "react-router-dom";
 
 const PokemonCard = styled.div`
   border: 1px solid ${Color.red};
@@ -46,7 +47,7 @@ const PokeOwned = styled.div`
 
 const PokemonList = ({ pokemon, totalOwned }) => {
   return (
-    <StyledLink to={`/pokemon/${pokemon.name}`}>
+    <StyledLink as={Link} to={`/pokemon/${pokemon.name}`}>
       <PokemonCard key={pokemon.id} data-testid="pokemon-card">
         <PokeOwned data-testid="totalOwned">{totalOwned} Owned</PokeOwned>
         <img src={pokemon.image} alt="" data-testid="pokemonImage" />

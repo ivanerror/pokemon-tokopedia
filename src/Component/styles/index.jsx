@@ -258,7 +258,7 @@ export const DescWrapper = styled.div`
   width: 100%;
 `;
 
-export const StyledLink = styled(Link)`
+export const StyledLink = styled.div`
   text-decoration: none;
 `;
 
