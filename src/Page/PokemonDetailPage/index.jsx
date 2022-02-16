@@ -14,9 +14,9 @@ import { GET_POKEMON_DETAIL } from "../../graphql/Pokemon";
 import CatchBar from "../../Component/CatchBar";
 import PokemonDetailFunc from "./PokemonDetailFunc";
 
-const PokeDesc = ({ title, content }) => {
+const PokeDesc = ({ title, content, ...props }) => {
   return (
-    <DescContentWrapper>
+    <DescContentWrapper {...props}>
       <H4>{title}</H4>
       <P>{content.join(", ").replace(/, ([^,]*)$/, " and $1")}</P>
     </DescContentWrapper>
@@ -32,7 +32,7 @@ const PokemonDetail = () => {
 
   if (loading) return null;
   if (error) return `Error! ${error}`;
-  if (!data.pokemon) return null;
+  if (!data?.pokemon) return null;
 
   const { pokemon } = data;
 
@@ -49,14 +49,17 @@ const PokemonDetail = () => {
           <PokeDesc
             title={"Types"}
             content={pokemon.types.map((type) => type.type.name)}
+            data-testid="pokemon-types"
           />
           <PokeDesc
             title={"Abilities"}
             content={pokemon.abilities.map((ability) => ability.ability.name)}
+            data-testid="pokemon-abilities"
           />
           <PokeDesc
             title={"Moves"}
             content={pokemon.moves.map((move) => move.move.name)}
+            data-testid="pokemon-moves"
           />
         </DescWrapper>
         <CatchBar onClick={() => handleCatchPokemon(pokemon)} />

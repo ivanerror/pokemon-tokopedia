@@ -4,6 +4,8 @@ import PokedexHeader from "../Component/PokemonHeader";
 import { MemoryRouter } from "react-router-dom";
 import PokemonList from "../Component/PokemonList";
 
+beforeEach(cleanup);
+
 describe("Render Pokemon Card Correctly", () => {
   it("rendering 1 list of pokemon", () => {
     const pokemon = {
